@@ -1,2 +1,0 @@
-# Psycore
-Avaliação farmacológica psiquiátrica
