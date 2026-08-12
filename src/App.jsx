@@ -1568,6 +1568,3 @@ html, body {
   .screen { height: calc(100vh - 40px); }
 }
 `;
-
-
-export default App
