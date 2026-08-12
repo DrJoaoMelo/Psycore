@@ -590,7 +590,7 @@ function HomeScreen({ onNavigate, onInfo }) {
         <div className="logo-wrap"><LogoMark size={92} /></div>
         <h1 className="home-title">
           <span className="wm-light">Psy</span><span className="wm-accent">Core</span>
-          <span className="version-badge">V1</span>
+          <span className="version-badge">V1.3</span>
         </h1>
         <p className="home-tagline">Referência rápida de psicofarmacologia</p>
       </div>
