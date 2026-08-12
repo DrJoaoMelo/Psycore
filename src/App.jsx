@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useEffect, Fragment, Component } from "react";
-import { ChevronLeft, ChevronDown, X, Check, Info, TriangleAlert as AlertTriangle, Search as SearchIcon } from "lucide-react";
+import { ChevronLeft, ChevronDown, X, Check, Info, AlertTriangle, Search as SearchIcon } from "lucide-react";
 
 /* ============================================================
    PsyCore — referência rápida de psicofarmacologia
@@ -1279,6 +1279,16 @@ export default function App() {
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
 
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #0a0c11;
+  min-height: 100%;
+}
+#root {
+  min-height: 100vh;
+}
+
 .pf-root {
   --bg: #0a0c11;
   --bg-elev: #12161d;
@@ -1558,3 +1568,6 @@ const CSS = `
   .screen { height: calc(100vh - 40px); }
 }
 `;
+
+
+export default App
