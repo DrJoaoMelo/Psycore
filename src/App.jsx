@@ -417,7 +417,7 @@ function HomeScreen({ onNavigate, onInfo }) {
         <div className="credits">
           <div className="credits-name">João V S Melo</div>
           <div className="credits-line">Residente de Psiquiatria do CHC-UFPR</div>
-          <div className="credits-line">Instagram: <span className="credits-handle">drjoamelopsiq</span></div>
+          <div className="credits-line">Instagram: <span className="credits-handle">@drjoamelopsiq</span></div>
           <div className="credits-line">João Melo Ltda</div>
           <div className="credits-year">2026</div>
         </div>
