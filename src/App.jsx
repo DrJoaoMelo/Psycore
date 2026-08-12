@@ -178,6 +178,189 @@ const RECEPTOR_ALERT_RULES = [
   },
 ];
 
+/* ---------------- curso temporal por receptor (curto x longo prazo) ----------------
+   Não presente na planilha original — avaliado à parte, a pedido do usuário.
+   Organizado por RECEPTOR (não por fármaco): o mecanismo de adaptação aguda
+   vs. crônica é uma propriedade do alvo, não de cada fármaco individualmente,
+   e repetir por fármaco só duplicaria texto sem agregar informação.
+   Cobertura deliberadamente seletiva: incluídos os alvos com narrativa
+   curto/longo prazo bem estabelecida na literatura humana e de real peso
+   didático. Ficaram de fora ~30 alvos majoritariamente pré-clínicos/moleculares
+   (GSK-3β, IPPase, IMPase, HDAC, HCN, anidrase carbônica, receptor cainato,
+   NOS, GABA-T, adenosina A1, imidazolina I1, TAAR1, GHB, CB2, subtipos
+   serotoninérgicos de uso muito restrito) por não haver base humana robusta
+   o bastante para essa distinção sem especular. */
+const RECEPTOR_TIMECOURSE = {
+  "5-HT1A": {
+    curto: "Agonismo direto (ex. buspirona) tem efeito ansiolítico discreto desde o início. Já a desinibição indireta por ISRS/IRSN (via ↑ 5-HT sináptica) esbarra num autorreceptor 5-HT1A somatodendrítico ainda sensível — por isso o efeito antidepressivo pleno não aparece de imediato.",
+    longo: "A dessensibilização do autorreceptor 5-HT1A ao longo de 2-4 semanas é considerada um dos mecanismos centrais do efeito antidepressivo tardio dos ISRS/IRSN (Blier & de Montigny). Agonismo parcial crônico (buspirona) mantém eficácia sem tolerância significativa bem documentada.",
+  },
+  "5-HT2A": {
+    curto: "Antagonismo agudo contribui para sedação/efeito hipnótico (trazodona em dose baixa) e para o perfil antipsicótico complementar ao D2 nos atípicos.",
+    longo: "Antagonismo crônico está associado a menor risco de SEP/discinesia tardia comparado ao antagonismo D2 isolado — um dos racionais por trás da classe dos antipsicóticos atípicos.",
+  },
+  "5-HT2C": {
+    curto: "Antagonismo agudo já aumenta o apetite de forma perceptível (mirtazapina, agomelatina) e contribui para efeito ansiolítico.",
+    longo: "Antagonismo sustentado é um dos principais mecanismos por trás do ganho de peso e risco metabólico (síndrome metabólica) associado ao uso prolongado de antipsicóticos atípicos.",
+  },
+  "5-HT3": {
+    curto: "Antagonismo agudo tem efeito antiemético rápido; constipação é um efeito adverso precoce comum.",
+    longo: "Pouca evidência de tolerância farmacodinâmica relevante com uso prolongado neste contexto (diferente do uso antiemético isolado, mais estudado).",
+  },
+  "5-HT7": {
+    curto: "Antagonismo agudo é hipotetizado como contribuinte para efeito antidepressivo e pró-cognitivo em alguns fármacos (ex. vortioxetina), além de participar da regulação do ritmo circadiano.",
+    longo: "Evidência humana ainda menos robusta que para 5-HT1A/5-HT2A — papel a longo prazo permanece parcialmente hipotético, sem marcadores de adaptação crônica bem estabelecidos.",
+  },
+  D1: {
+    curto: "Ativação aguda relacionada a efeitos cognitivos/motivacionais no córtex pré-frontal; a maioria dos fármacos desta lista não é seletiva para D1.",
+    longo: "Adaptação crônica em humanos pouco caracterizada isoladamente — a maior parte dos dados vem de modelos animais.",
+  },
+  D2: {
+    curto: "A ocupação do receptor é praticamente imediata, mas a resposta antipsicótica plena tipicamente só emerge após 1-3 semanas de bloqueio sustentado — um dos pontos clássicos de ensino (ocupação ≠ resposta clínica). Bloqueio intenso desde o início já traz risco de distonia aguda e acatisia.",
+    longo: "Bloqueio D2 crônico é o principal mecanismo por trás de discinesia tardia (geralmente após meses a anos), hiperprolactinemia sustentada e parkinsonismo persistente. Agonistas parciais D2 (aripiprazol, brexpiprazol, cariprazina) têm menor risco de discinesia tardia a longo prazo, mas podem trazer acatisia mais cedo no tratamento.",
+  },
+  D3: {
+    curto: "Coativado com D2 na maior parte dos fármacos desta lista — contribuição isolada de curto prazo pouco caracterizada clinicamente.",
+    longo: "Hipotetizado como relevante para sintomas negativos e craving (maior densidade em áreas límbicas), mas a evidência de um efeito D3-específico a longo prazo, independente do D2, ainda é limitada em humanos.",
+  },
+  SERT: {
+    curto: "O aumento de 5-HT sináptica é imediato, mas na primeira semana predominam efeitos colaterais gastrointestinais e, às vezes, piora inicial da ansiedade — antes do efeito terapêutico aparecer.",
+    longo: "O efeito antidepressivo/ansiolítico pleno costuma emergir em 2-6 semanas. Uso prolongado pode se associar a disfunção sexual persistente em uma minoria mesmo após a suspensão (achado ainda debatido na literatura). Descontinuação abrupta após uso prolongado pode causar síndrome de descontinuação, mais notável em fármacos de meia-vida curta.",
+  },
+  NAT: {
+    curto: "Inibição aguda traz efeitos simpaticomiméticos (↑ FC, ↑ PA) e, com frequência, ativação/insônia nos primeiros dias.",
+    longo: "Efeito terapêutico (TDAH, depressão) costuma se manter sem tolerância farmacodinâmica franca documentada, mas o risco cardiovascular (PA/FC) é sustentado e exige monitorização contínua.",
+  },
+  DAT: {
+    curto: "Inibição aguda tem efeito estimulante/euforizante — quanto mais rápido o bloqueio, maior o potencial de abuso associado.",
+    longo: "Uso crônico de estimulantes de ação rápida carrega risco relevante de tolerância parcial e dependência; formulações de liberação controlada (lisdexanfetamina, metilfenidato XR) têm perfil mais favorável nesse sentido.",
+  },
+  "α1": {
+    curto: "Antagonismo agudo causa hipotensão ortostática e tontura, mais proeminentes na titulação inicial ou ao trocar de dose.",
+    longo: "Costuma haver alguma tolerância parcial ao efeito hipotensor com uso continuado, mas o efeito sedativo associado pode persistir.",
+  },
+  "α2": {
+    curto: "Agonismo agudo (clonidina, guanfacina) causa sedação, hipotensão e bradicardia, mais intensas no início do tratamento.",
+    longo: "Tolerância parcial ao efeito sedativo/hipotensor é comum com uso continuado. A suspensão abrupta após uso prolongado pode causar rebote hipertensivo — relevante clinicamente, exige retirada gradual.",
+  },
+  "α2A": {
+    curto: "Agonismo agudo causa sedação, hipotensão e bradicardia, mais intensas no início do tratamento (subtipo mais implicado nos efeitos pró-cognitivos/TDAH da guanfacina).",
+    longo: "Tolerância parcial ao efeito sedativo/hipotensor é comum com uso continuado. Suspensão abrupta após uso prolongado pode causar rebote hipertensivo.",
+  },
+  "α2B": {
+    curto: "Contribui para os efeitos hemodinâmicos agudos (hipotensão, bradicardia) quando coativado com α2A/α2C pelos mesmos fármacos.",
+    longo: "Papel isolado a longo prazo pouco distinguido do restante da família α2 na prática clínica.",
+  },
+  "α2C": {
+    curto: "Contribui para os efeitos hemodinâmicos agudos (hipotensão, bradicardia) quando coativado com α2A/α2B pelos mesmos fármacos.",
+    longo: "Papel isolado a longo prazo pouco distinguido do restante da família α2 na prática clínica.",
+  },
+  H1: {
+    curto: "Antagonismo agudo causa sedação proeminente, mais forte nos primeiros dias — costuma haver alguma tolerância parcial a esse efeito em 1-2 semanas.",
+    longo: "Contribui de forma sustentada para ganho de peso (↓ taxa metabólica basal, ↑ apetite) — esse efeito metabólico tende a ser mais persistente do que a sedação.",
+  },
+  H3: {
+    curto: "Antagonismo agudo tem efeito pró-cognitivo/pró-vigília (pitolisanto).",
+    longo: "Evidência ainda limitada sobre adaptação crônica específica a este alvo em humanos.",
+  },
+  M1: {
+    curto: "Antagonismo agudo causa boca seca, constipação, visão turva e retenção urinária, além de prejuízo cognitivo agudo (mais notável em idosos).",
+    longo: "Bloqueio M1 crônico está associado a maior risco de comprometimento cognitivo sustentado e demência em idosos — a carga anticolinérgica cumulativa é bem documentada em estudos observacionais.",
+  },
+  M2: {
+    curto: "Antagonismo agudo pode contribuir para taquicardia (efeito cardíaco, menos proeminente que M1/M3 na maioria dos psicofármacos desta lista).",
+    longo: "Papel isolado a longo prazo pouco caracterizado fora do contexto cardiológico.",
+  },
+  M3: {
+    curto: "Antagonismo agudo contribui para os efeitos periféricos clássicos: boca seca, constipação, retenção urinária.",
+    longo: "Contribui, junto ao M1, para a carga anticolinérgica cumulativa associada a risco cognitivo a longo prazo em idosos.",
+  },
+  M4: {
+    curto: "Papel menos proeminente entre os efeitos anticolinérgicos periféricos clássicos.",
+    longo: "Adaptação crônica pouco caracterizada isoladamente em humanos.",
+  },
+  M5: {
+    curto: "Papel menos proeminente entre os efeitos anticolinérgicos periféricos clássicos.",
+    longo: "Adaptação crônica pouco caracterizada isoladamente em humanos.",
+  },
+  MT1: {
+    curto: "Agonismo agudo tem efeito hipnótico/cronobiótico relativamente rápido, com boa tolerabilidade geral.",
+    longo: "Diferencial importante frente a benzodiazepínicos/Z-drugs: sem evidência robusta de tolerância ou dependência física significativas com uso prolongado.",
+  },
+  MT2: {
+    curto: "Agonismo agudo contribui para o ajuste de fase do ciclo sono-vigília.",
+    longo: "Mesmo perfil favorável do MT1 quanto à ausência de tolerância/dependência documentada.",
+  },
+  "GABA-A": {
+    curto: "Potencialização aguda tem efeito rápido e dose-dependente: sedação, ansiólise, ação anticonvulsivante e relaxamento muscular.",
+    longo: "Uso crônico leva a tolerância farmacodinâmica (doses maiores necessárias com o tempo) e dependência física — a retirada abrupta após uso prolongado carrega risco real de convulsão. Um dos pontos mais importantes de ensino sobre benzodiazepínicos.",
+  },
+  NMDA: {
+    curto: "Antagonismo agudo (cetamina/escetamina) tem efeito antidepressivo rápido (horas a dias), mas também pode causar sintomas dissociativos/psicotomiméticos transitórios durante a infusão.",
+    longo: "Uso repetido de cetamina carrega potencial de abuso/dependência e risco de cistite com uso crônico em alta dose. Memantina (uso crônico em demência) tem, na prática, perfil mais benigno a longo prazo.",
+  },
+  "κ-opioide": {
+    curto: "Agonismo agudo tem efeito disfórico/aversivo (relevante para o desenvolvimento de antagonistas kappa como antidepressivos); antagonismo agudo bloqueia parte do reforço relacionado ao uso de álcool.",
+    longo: "Pouca tolerância descrita para o componente disfórico do agonismo kappa a longo prazo.",
+  },
+  "μ-opioide": {
+    curto: "Antagonismo agudo (naltrexona) precipita síndrome de abstinência em usuários ativos de opioides — por isso exige período de abstinência prévio antes de iniciar.",
+    longo: "Bloqueio crônico reduz o reforço associado ao uso de álcool/opioides (base do uso em transtornos por uso de substâncias), sem tolerância significativa ao bloqueio em si.",
+  },
+  "δ-opioide": {
+    curto: "Papel menos caracterizado clinicamente que κ/μ nesta lista de fármacos.",
+    longo: "Adaptação crônica pouco estabelecida em humanos para os fármacos aqui presentes.",
+  },
+  OX1: {
+    curto: "Antagonismo agudo tem efeito hipnótico ao suprimir o sistema de vigília orexinérgico.",
+    longo: "Dados de uso muito prolongado ainda são relativamente recentes; sonolência residual diurna é o principal risco identificado até o momento, sem sinais robustos de tolerância ao efeito hipnótico.",
+  },
+  OX2: {
+    curto: "Antagonismo agudo tem efeito hipnótico ao suprimir o sistema de vigília orexinérgico.",
+    longo: "Mesmo perfil do OX1 — dados de longo prazo ainda relativamente recentes na literatura.",
+  },
+  VMAT2: {
+    curto: "Inibição aguda deplecionando monoaminas vesiculares tem efeito antidiscinético/anticoreico relativamente rápido.",
+    longo: "Uso sustentado carrega risco bem documentado de depressão, sedação e sintomas parkinsonianos — motivo de monitorização contínua do humor com tetrabenazina/valbenazina/deutetrabenazina.",
+  },
+  CB1: {
+    curto: "Agonismo agudo (THC) causa efeitos psicoativos, podendo gerar tanto ansiólise quanto ansiedade paradoxal, além de alterações cognitivas transitórias.",
+    longo: "Uso crônico leva a tolerância ao efeito psicoativo e síndrome de abstinência à suspensão; associado a maior risco de sintomas psicóticos em indivíduos predispostos e possível impacto cognitivo sustentado quando o uso é precoce/intenso.",
+  },
+  nAChR: {
+    curto: "Agonismo agudo tem efeito estimulante/pró-cognitivo leve; náusea é um efeito adverso inicial comum.",
+    longo: "Uso crônico de nicotina classicamente causa dessensibilização seguida de upregulation de receptores nicotínicos — fenômeno central na dependência. Para agonistas parciais terapêuticos, o perfil de tolerância é diferente e menos estabelecido.",
+  },
+  "nAChR α4β2": {
+    curto: "Agonismo parcial agudo reduz o craving por nicotina desde as primeiras semanas de uso.",
+    longo: "Perfil de segurança a longo prazo bem estabelecido para cessação tabágica; não é indicado para uso indefinido.",
+  },
+  "nAChR α7": {
+    curto: "Papel relacionado a efeitos pró-cognitivos hipotéticos; menos caracterizado clinicamente que α4β2 nesta lista.",
+    longo: "Adaptação crônica pouco estabelecida em humanos para os fármacos aqui presentes.",
+  },
+  AChE: {
+    curto: "Inibição aguda causa efeitos colinérgicos periféricos (náusea, diarreia, cãibras), mais proeminentes no início/titulação.",
+    longo: "Efeito pró-cognitivo sustentado, porém moderado, em demência — a eficácia tende a se atenuar com a progressão da doença de base, o que não é propriamente tolerância farmacológica.",
+  },
+  BuChE: {
+    curto: "Contribui para os mesmos efeitos colinérgicos periféricos agudos da inibição da AChE.",
+    longo: "Papel relativo à AChE varia conforme a doença progride (BuChE ganha importância relativa em fases mais avançadas de demência).",
+  },
+  "σ1": {
+    curto: "Modulação aguda hipotetizada como contribuinte para efeitos ansiolíticos/antidepressivos em alguns fármacos.",
+    longo: "Evidência humana ainda limitada — mecanismo de adaptação crônica não bem estabelecido; incluído aqui com essa ressalva.",
+  },
+  "Canal Na+": {
+    curto: "Bloqueio agudo reduz excitabilidade neuronal — base do efeito anticonvulsivante e estabilizador do humor de início relativamente rápido.",
+    longo: "Efeito costuma se manter sem tolerância franca relevante a longo prazo; o principal risco de longo prazo é relacionado a toxicidade/overdose, não a perda de eficácia.",
+  },
+};
+
+function timecourseFor(receptor) {
+  return RECEPTOR_TIMECOURSE[receptor] || null;
+}
+
 /* ---------------- helpers ---------------- */
 function normalize(str) {
   return (str || "")
@@ -466,7 +649,7 @@ function HomeScreen({ onNavigate, onInfo }) {
         <div className="logo-wrap"><LogoMark size={92} /></div>
         <h1 className="home-title">
           <span className="wm-light">Psy</span><span className="wm-accent">Core</span>
-          <span className="version-badge">V1.1</span>
+          <span className="version-badge">V1</span>
         </h1>
         <p className="home-tagline">Referência rápida de psicofarmacologia</p>
       </div>
@@ -689,7 +872,7 @@ function ReceptorGroupAccordion({ group, items, open, onToggle }) {
                   <span className="rx-tipo">{TIPO_LABEL[rx.t]}</span>
                   <ScoreDots tipo={rx.t} score={rx.s} />
                 </button>
-                {isOpen && (rx.et || rx.ea) && (
+                {isOpen && (rx.et || rx.ea || timecourseFor(rx.r)) && (
                   <div className="rx-detail">
                     {rx.et && (
                       <div className="rx-detail-row">
@@ -702,6 +885,19 @@ function ReceptorGroupAccordion({ group, items, open, onToggle }) {
                         <span className="rx-detail-label warn">Efeito adverso / risco</span>
                         <span>{rx.ea}</span>
                       </div>
+                    )}
+                    {timecourseFor(rx.r) && (
+                      <>
+                        <div className="rx-detail-row">
+                          <span className="rx-detail-label time-short">Curto prazo</span>
+                          <span>{timecourseFor(rx.r).curto}</span>
+                        </div>
+                        <div className="rx-detail-row">
+                          <span className="rx-detail-label time-long">Longo prazo</span>
+                          <span>{timecourseFor(rx.r).longo}</span>
+                        </div>
+                        <div className="source-note">curso temporal pesquisado à parte — não presente na planilha original</div>
+                      </>
                     )}
                   </div>
                 )}
@@ -1597,6 +1793,8 @@ html, body {
 .rx-detail-label { display: block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
 .rx-detail-label.ok { color: hsl(152 55% 55%); }
 .rx-detail-label.warn { color: hsl(355 70% 62%); }
+.rx-detail-label.time-short { color: hsl(190 65% 60%); }
+.rx-detail-label.time-long { color: hsl(265 55% 68%); }
 
 /* metabolism chips */
 .enzyme-chip { font-family: var(--font-mono); font-size: 11.5px; padding: 5px 11px; border-radius: 8px; background: var(--bg-elev-2); border: 1px solid var(--border); color: var(--text); letter-spacing: -0.01em; }
